@@ -4,7 +4,7 @@ import Cocoa
 extension Snapshotting where Value == CALayer, Format == NSImage {
   /// A snapshot strategy for comparing layers based on pixel equality.
   public static var image: Snapshotting {
-    return .image(precision: 1, subpixelThreshold: 0)
+    return .image(precision: 1, subpixelThreshold: 5)
   }
 
   /// A snapshot strategy for comparing layers based on pixel equality.
@@ -37,7 +37,7 @@ extension Snapshotting where Value == CALayer, Format == UIImage {
   ///
   /// - Parameter precision: The percentage of pixels that must match.
   /// - Parameter subpixelThreshold: The byte-value threshold at which two subpixels are considered different.
-    public static func image(precision: Float = 1, subpixelThreshold: UInt8 = 0, traits: UITraitCollection = .init())
+    public static func image(precision: Float = 1, subpixelThreshold: UInt8 = 5, traits: UITraitCollection = .init())
     -> Snapshotting {
       return SimplySnapshotting.image(precision: precision, subpixelThreshold: subpixelThreshold, scale: traits.displayScale).pullback { layer in
         renderer(bounds: layer.bounds, for: traits).image { ctx in
